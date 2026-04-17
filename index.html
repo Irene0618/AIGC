@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>致命节点 · 主创共创手册</title>
+<meta name="description" content="AIGC交互式禁毒影像共创工作坊参与者指导手册">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a12;--surface:#13131f;--surface2:#1a1a2e;--surface3:#222240;
+  --accent:#6c5ce7;--accent2:#a29bfe;--danger:#d63031;--danger2:#ff7675;
+  --success:#00b894;--warn:#fdcb6e;--text:#e8e8f0;--text2:#9a9ab8;
+  --glow:0 0 30px rgba(108,92,231,.3);--radius:16px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.8}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:2rem}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(108,92,231,.15),transparent 60%),radial-gradient(ellipse at 70% 60%,rgba(214,48,49,.1),transparent 50%)}
+.hero-badge{display:inline-block;padding:.4rem 1.2rem;border:1px solid var(--danger);border-radius:99px;font-size:.75rem;color:var(--danger2);letter-spacing:3px;text-transform:uppercase;margin-bottom:1.5rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:900;background:linear-gradient(135deg,var(--accent2),var(--danger2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:.5rem}
+.hero-sub{font-size:clamp(1rem,3vw,1.4rem);color:var(--text2);font-weight:300;margin-bottom:2rem}
+.hero-tagline{font-size:1.1rem;color:var(--accent2);border-left:3px solid var(--accent);padding-left:1rem;margin-bottom:3rem}
+.hero-cta{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.5rem;background:linear-gradient(135deg,var(--accent),#5a3fd6);color:#fff;border:none;border-radius:99px;font-size:1rem;cursor:pointer;text-decoration:none;transition:all .3s;box-shadow:var(--glow)}
+.hero-cta:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(108,92,231,.5)}
+
+/* Scroll indicator */
+.scroll-hint{position:absolute;bottom:2rem;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+.scroll-hint svg{width:24px;height:24px;stroke:var(--text2)}
+
+/* Sections */
+.section{max-width:800px;margin:0 auto;padding:5rem 1.5rem}
+.section-label{display:inline-block;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+.section h2{font-size:2rem;font-weight:700;margin-bottom:1rem;line-height:1.3}
+.section h2 span{color:var(--accent2)}
+.section h3{font-size:1.2rem;font-weight:600;color:var(--accent2);margin:2rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:2rem;border-radius:2px}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid rgba(108,92,231,.15);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;transition:all .3s}
+.card:hover{border-color:var(--accent);box-shadow:var(--glow);transform:translateY(-2px)}
+.card-warn{border-left:3px solid var(--warn)}
+.card-danger{border-left:3px solid var(--danger)}
+.card-success{border-left:3px solid var(--success)}
+
+/* Schedule */
+.schedule-item{display:flex;gap:1.5rem;padding:1.2rem 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:flex-start}
+.schedule-time{min-width:110px;font-family:'Orbitron',monospace;font-size:.85rem;color:var(--accent2);padding-top:.2rem}
+.schedule-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:.4rem;flex-shrink:0;box-shadow:0 0 10px var(--accent)}
+.schedule-content h4{font-size:1rem;margin-bottom:.2rem}
+.schedule-content p{font-size:.85rem;color:var(--text2)}
+
+/* Role cards */
+.role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem}
+.role-card{background:var(--surface2);border-radius:var(--radius);padding:1.2rem;border:1px solid transparent;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.role-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
+.role-card:nth-child(1)::before{background:var(--danger)}
+.role-card:nth-child(2)::before{background:var(--warn)}
+.role-card:nth-child(3)::before{background:#e17055}
+.role-card:nth-child(4)::before{background:var(--success)}
+.role-card:nth-child(5)::before{background:var(--accent)}
+.role-card:nth-child(6)::before{background:#636e72}
+.role-card:hover{border-color:var(--accent);transform:scale(1.02)}
+.role-card .role-tag{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:.3rem}
+.role-card .role-name{font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
+.role-card .role-keys{font-size:.85rem;color:var(--text2)}
+.role-card .role-tone{font-size:.8rem;color:var(--accent2);font-style:italic;margin-top:.5rem}
+
+/* Story */
+.story-block{background:linear-gradient(135deg,var(--surface),var(--surface2));border-radius:var(--radius);padding:2rem;margin:1.5rem 0;border:1px solid rgba(108,92,231,.1);position:relative}
+.story-block::before{content:'"';position:absolute;top:-.2rem;left:1rem;font-size:4rem;color:var(--accent);opacity:.3;font-family:serif}
+.story-block p{padding-left:.5rem;margin-bottom:1rem;line-height:2}
+.story-block .highlight{color:var(--warn);font-weight:500}
+.story-block .danger{color:var(--danger2);font-weight:600}
+
+/* Forms */
+.form-group{margin-bottom:1.5rem}
+.form-group label{display:block;font-size:.9rem;color:var(--text2);margin-bottom:.5rem}
+.form-group textarea,.form-group input[type="text"]{width:100%;background:var(--surface2);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1rem;color:var(--text);font-size:.95rem;font-family:inherit;resize:vertical;transition:border-color .3s}
+.form-group textarea:focus,.form-group input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(108,92,231,.2)}
+.form-group textarea{min-height:80px}
+
+/* Rating */
+.rating-row{display:flex;align-items:center;gap:.5rem;padding:1rem;background:var(--surface2);border-radius:12px;margin-bottom:.5rem;flex-wrap:wrap}
+.rating-row .rating-label{flex:1;min-width:200px;font-size:.9rem}
+.rating-stars{display:flex;gap:.3rem}
+.rating-stars button{width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--text2);cursor:pointer;font-size:.8rem;transition:all .2s}
+.rating-stars button:hover,.rating-stars button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Consent */
+.consent-box{background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius);padding:2rem;margin:2rem 0}
+.consent-box ul{list-style:none;padding:0}
+.consent-box li{padding:.5rem 0;padding-left:1.5rem;position:relative;font-size:.95rem}
+.consent-box li::before{content:'';position:absolute;left:0;top:.85rem;width:8px;height:8px;border-radius:50%}
+.consent-box li:nth-child(1)::before{background:var(--accent)}
+.consent-box li:nth-child(2)::before{background:var(--success)}
+.consent-box li:nth-child(3)::before{background:var(--warn)}
+.consent-box li:nth-child(4)::before{background:var(--danger)}
+.consent-check{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:1rem;background:var(--surface2);border-radius:12px}
+.consent-check input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent)}
+
+/* Data flow */
+.flow-container{display:flex;flex-direction:column;gap:.5rem;margin:2rem 0}
+.flow-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;background:var(--surface2);border-radius:12px;transition:all .3s}
+.flow-item:hover{transform:translateX(8px);background:var(--surface3)}
+.flow-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.flow-arrow{text-align:center;color:var(--accent);font-size:1.2rem}
+.flow-item .flow-from{font-weight:500;min-width:120px}
+.flow-item .flow-to{color:var(--accent2);font-size:.9rem}
+
+/* Sticky nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.8rem 1.5rem;display:flex;align-items:center;justify-content:space-between;transition:all .4s;backdrop-filter:blur(20px)}
+.nav.scrolled{background:rgba(10,10,18,.9);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-logo{font-family:'Orbitron',sans-serif;font-weight:700;font-size:.9rem;color:var(--accent2)}
+.nav-links{display:flex;gap:.5rem}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:.8rem;padding:.4rem .8rem;border-radius:8px;transition:all .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface2)}
+
+/* Footer */
+.footer{text-align:center;padding:3rem 1.5rem;border-top:1px solid rgba(255,255,255,.05);color:var(--text2);font-size:.85rem}
+.footer .school{font-size:1rem;color:var(--text);margin-bottom:.5rem}
+
+/* Countdown widget */
+.countdown-demo{display:flex;align-items:center;justify-content:center;gap:1rem;padding:2rem;background:var(--surface);border-radius:var(--radius);margin:1.5rem 0}
+.cd-num{font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;color:var(--danger);text-shadow:0 0 20px rgba(214,48,49,.5)}
+.cd-label{font-size:.85rem;color:var(--text2)}
+.cd-btn{padding:.6rem 1.5rem;border-radius:10px;border:none;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.cd-btn-a{background:var(--success);color:#fff}
+.cd-btn-b{background:var(--surface3);color:var(--text2);border:1px solid rgba(255,255,255,.1)}
+.cd-btn:hover{transform:scale(1.05)}
+
+/* Sensory grid */
+.sensory-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+.sensory-card{padding:1.2rem;border-radius:12px;border:1px dashed rgba(255,255,255,.15)}
+.sensory-card.visual{border-color:rgba(214,48,49,.4);background:rgba(214,48,49,.05)}
+.sensory-card.audio{border-color:rgba(108,92,231,.4);background:rgba(108,92,231,.05)}
+.sensory-card.tactile{border-color:rgba(0,184,148,.4);background:rgba(0,184,148,.05)}
+.sensory-card h4{font-size:.85rem;margin-bottom:.8rem}
+.sensory-card textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.1);color:var(--text);font-family:inherit;padding:.3rem 0;font-size:.9rem;resize:none;height:32px}
+.sensory-card textarea:focus{outline:none;border-color:var(--accent)}
+
+/* Animations */
+.fade-in{opacity:0;transform:translateY(30px);transition:all .8s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){
+  .role-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .schedule-item{flex-direction:column;gap:.5rem}
+  .rating-row{flex-direction:column;align-items:flex-start}
+  .sensory-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">致命节点</div>
+  <div class="nav-links">
+    <a href="#consent">知情同意</a>
+    <a href="#schedule">流程</a>
+    <a href="#story">剧本</a>
+    <a href="#action1">台词战</a>
+    <a href="#action2">深渊</a>
+    <a href="#action3">反击</a>
+    <a href="#feedback">反馈</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-badge">⚠️ 内部资料 · 仅限主创</div>
+  <h1>致命节点</h1>
+  <p class="hero-sub">AIGC 交互式影像 · 主创共创手册</p>
+  <p class="hero-tagline">你不是被试，你是导演。</p>
+  <a href="#consent" class="hero-cta">🎬 开始今日创作</a>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- Consent -->
+<section class="section fade-in" id="consent">
+  <div class="section-label">第一步</div>
+  <h2>研究者寄语 + <span>知情同意</span></h2>
+  <div class="divider"></div>
+  <p style="margin-bottom:1.5rem">你好！感谢你参与这次工作坊。我是哈尔滨工业大学（深圳）设计学专业的硕士研究生。我的毕业论文正在研究：<strong>如何用 AIGC 技术制作一部交互式禁毒教育短片，让年轻人在"亲身经历"的沉浸感中学会保护自己。</strong></p>
+  <p style="margin-bottom:1.5rem">今天，你贡献的每一句台词、每一个恐惧画面描述、每一条脱身话术，都将直接变成 AI 视频生成的素材。</p>
+  <div class="consent-box">
+    <h3 style="margin-top:0">📋 你需要知道的</h3>
+    <ul>
+      <li>🎙️ 本场工作坊将进行<strong>全程录音</strong>（仅录音，不录像），用于后期台词提取</li>
+      <li>📝 你的发言将以<strong>匿名化名</strong>（如 P1、P2）的形式出现在论文中</li>
+      <li>🚪 你可以<strong>随时退出</strong>，不需要任何理由</li>
+      <li>🔒 所有原始数据仅用于本研究，不会向第三方透露</li>
+    </ul>
+    <div class="consent-check">
+      <input type="checkbox" id="consentCheck">
+      <label for="consentCheck" style="cursor:pointer">我已了解上述信息，自愿参与本次工作坊</label>
+    </div>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section class="section fade-in" id="schedule">
+  <div class="section-label">今日通告单</div>
+  <h2>🎬 <span>拍摄流程</span></h2>
+  <div class="divider"></div>
+  <div>
+    <div class="schedule-item"><span class="schedule-time">14:00 – 14:15</span><span class="schedule-dot"></span><div class="schedule-content"><h4>🔌 身份载入</h4><p>破冰 + 剧本试读 + 角色分配</p></div></div>
+    <div class="schedule-item"><span class="schedule-time">14:15 – 14:50</span><span class="schedule-dot" style="background:var(--danger)"></span><div class="schedule-content"><h4>🍎 Action 1：毒苹果之战</h4><p>即兴台词交锋 · 施压者 vs 被压者 · 3轮对戏</p></div></div>
+    <div class="schedule-item"><span class="schedule-time">14:50 – 14:55</span><span class="schedule-dot" style="background:var(--text2)"></span><div class="schedule-content"><h4>☕ 中场休息</h4><p>喝水、吃零食、缓口气</p></div></div>
+    <div class="schedule-item"><span class="schedule-time">14:55 – 15:35</span><span class="schedule-dot" style="background:var(--warn)"></span><div class="schedule-content"><h4>👁️ Action 2：深渊残影</h4><p>恐惧感官拆解 + AIGC 提示词视觉共创</p></div></div>
+    <div class="schedule-item"><span class="schedule-time">15:35 – 15:55</span><span class="schedule-dot" style="background:var(--success)"></span><div class="schedule-content"><h4>🛡️ Action 3：绝地反击</h4><p>脱身话术共创 + 交互 UI 按键设计</p></div></div>
+    <div class="schedule-item"><span class="schedule-time">15:55 – 16:00</span><span class="schedule-dot" style="background:var(--accent2)"></span><div class="schedule-content"><h4>🎬 杀青</h4><p>反馈表 + 合影留念</p></div></div>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="section fade-in" id="story">
+  <div class="section-label">剧本前传</div>
+  <h2>你的故事从<span>这里</span>开始</h2>
+  <div class="divider"></div>
+  <div class="story-block">
+    <p>🌃 <strong>时间</strong>：某个周五深夜，22:30</p>
+    <p>📍 <strong>地点</strong>：朋友小柯的生日轰趴。一间民宿 Loft，约 40 平米的客厅。主灯关了，角落的 LED 灯带和投影仪把墙壁映得忽明忽暗。蓝牙音箱里放着慵懒的 Lo-fi 音乐。茶几上摆满了零食、啤酒罐和外卖盒。</p>
+    <p>👤 <strong>你</strong>：坐在沙发角落，手里拿着一罐刚开的冰饮料。你是最后一个到的。大家都在各自放松——有人在打手游，有人在聊天，角落里有人在笑。</p>
+    <p>👃 <strong>空气中</strong>：除了酒精和炸鸡的味道，还有一丝<span class="highlight">说不上来的甜腻气味</span>。你没太在意。</p>
+  </div>
+  <h3>⚡ 转折</h3>
+  <div class="story-block">
+    <p>大约 23:00。门又被推开了。进来的是<strong>阿涛</strong>——一个你们共同认识的"社会大哥"，比你们大几岁，气场很强。他手腕上戴着名表，拎着一个纸袋。</p>
+    <p>他跟每个人都拍了拍肩膀，然后走到你面前，从口袋里掏出一支<span class="danger">包装得很时髦的电子烟</span>，递到你手边——</p>
+    <p style="font-size:1.3rem;font-weight:700;text-align:center;color:var(--danger2);margin:1rem 0"><em>"来一口？放松放松。"</em></p>
+  </div>
+  <div class="card card-warn" style="text-align:center;font-size:1.1rem">
+    ❓ 后面的故事，取决于你今天的创作。
+  </div>
+</section>
+
+<!-- Action 1 -->
+<section class="section fade-in" id="action1">
+  <div class="section-label">Action 1</div>
+  <h2>🍎 毒苹果之战 · <span>角色卡</span></h2>
+  <div class="divider"></div>
+  <p style="margin-bottom:1.5rem">本环节将进行 <strong>3 轮即兴对戏</strong>。每人至少体验 1 次"施压者"和 1 次"被压者"。以下是 6 种施压类型——你的角色将通过抽签决定：</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role-tag">TYPE A</div><div class="role-name">🅰️ 情感绑架型</div><div class="role-keys">关键词：兄弟情、面子、你不够意思</div><div class="role-tone">"你不接就是不给我面子"</div></div>
+    <div class="role-card"><div class="role-tag">TYPE B</div><div class="role-name">🅱️ 鄙视链型</div><div class="role-keys">关键词：圈子、见世面、土包子</div><div class="role-tone">"你不会连这个都没见过吧？"</div></div>
+    <div class="role-card"><div class="role-tag">TYPE C</div><div class="role-name">🅲 激将法型</div><div class="role-keys">关键词：怂、不敢、没胆</div><div class="role-tone">"连试一下都不敢？胆小鬼！"</div></div>
+    <div class="role-card"><div class="role-tag">TYPE D</div><div class="role-name">🅳 趁虚而入型</div><div class="role-keys">关键词：关心、压力、帮你放松</div><div class="role-tone">"你最近压力大吧？试试这个"</div></div>
+    <div class="role-card"><div class="role-tag">TYPE E</div><div class="role-name">🅴 稀缺诱惑型</div><div class="role-keys">关键词：贵、稀缺、真兄弟才给你</div><div class="role-tone">"好东西，只给你留了最后一口"</div></div>
+    <div class="role-card"><div class="role-tag">TYPE F</div><div class="role-name">🅵 权力压制型</div><div class="role-keys">关键词：听话、前途、大项目</div><div class="role-tone">"这点面子都不给？"</div></div>
+  </div>
+
+  <h3>✍️ 我的台词记录</h3>
+  <div class="form-group"><label>当我扮演施压者时，我说了什么？（请尽量还原即兴台词，包括语气词）</label><textarea placeholder="例如：哎——你看咱哥几个谁不来一口啊？上次小宇试了直接说爽飞了……"></textarea></div>
+  <div class="form-group"><label>当我被施压时，我的第一反应是什么？（身体反应 + 说了什么/想说没说出口的）</label><textarea placeholder="例如：沉默了大概3秒，脑子一片空白，最后只说了'那个……我……'"></textarea></div>
+  <div class="form-group">
+    <label>压迫感自评（1-5 分）</label>
+    <div class="rating-stars" data-field="pressure">
+      <button onclick="rate(this,1)">1</button><button onclick="rate(this,2)">2</button><button onclick="rate(this,3)">3</button><button onclick="rate(this,4)">4</button><button onclick="rate(this,5)">5</button>
+    </div>
+  </div>
+  <div class="form-group"><label>哪种施压类型最让你"难以开口拒绝"？</label><input type="text" placeholder="例如：D 趁虚而入，因为……"></div>
+</section>
+
+<!-- Action 2 -->
+<section class="section fade-in" id="action2">
+  <div class="section-label">Action 2</div>
+  <h2>👁️ 深渊残影 · <span>感官拆解</span></h2>
+  <div class="divider"></div>
+  <div class="story-block">
+    <p>想象一下：你刚才试了"那一口"。大约 30 分钟后，心跳加速、手指发麻、视线模糊……然后你失去了意识。</p>
+    <p>当你再次"醒来"时，你发现自己正躺在一张<span class="danger">冰冷的金属病床上</span>。头顶是刺眼的白色荧光灯。你听到急促的脚步声和机器的"嘀嘀"声。你想动，但你的身体不听使唤……</p>
+  </div>
+
+  <h3>🎨 感官关键词拆解</h3>
+  <p style="color:var(--text2);margin-bottom:1rem">请分类写下你脑海中"最窒息的画面"的感官关键词：</p>
+  <div class="sensory-grid">
+    <div class="sensory-card visual"><h4>🔴 视觉 · 你看到了什么？</h4><textarea placeholder="关键词 1"></textarea><textarea placeholder="关键词 2"></textarea><textarea placeholder="关键词 3"></textarea><textarea placeholder="关键词 4"></textarea><textarea placeholder="关键词 5"></textarea></div>
+    <div class="sensory-card audio"><h4>🔵 听觉 · 你听到了什么？</h4><textarea placeholder="关键词 1"></textarea><textarea placeholder="关键词 2"></textarea><textarea placeholder="关键词 3"></textarea></div>
+    <div class="sensory-card tactile"><h4>🟢 触觉 · 你感觉到了什么？</h4><textarea placeholder="关键词 1"></textarea><textarea placeholder="关键词 2"></textarea></div>
+  </div>
+
+  <h3>🤔 关键讨论</h3>
+  <div class="form-group"><label>最恐怖的到底是什么？是血腥画面？还是"想动但动不了"的无力感？还是其他？</label><textarea placeholder="写下你的想法……"></textarea></div>
+  <div class="form-group"><label>恐惧画面应该持续多少秒最"致命"？（太短没感觉，太长会麻木）</label><input type="text" placeholder="例如：10-15秒"></div>
+</section>
+
+<!-- Action 3 -->
+<section class="section fade-in" id="action3">
+  <div class="section-label">Action 3</div>
+  <h2>🛡️ 绝地反击 · <span>脱身话术</span></h2>
+  <div class="divider"></div>
+
+  <div class="card card-warn">
+    <h3 style="margin-top:0">📊 166 人的真实数据</h3>
+    <p style="font-size:.9rem;color:var(--text2);margin-bottom:1rem">我们之前调查了 166 名 18-25 岁年轻人："如果有人在聚会上递给你疑似毒品，你最可能怎么脱身？"</p>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+      <span style="background:var(--surface3);padding:.4rem .8rem;border-radius:8px;font-size:.85rem">指出违法 22.9%</span>
+      <span style="background:var(--surface3);padding:.4rem .8rem;border-radius:8px;font-size:.85rem">客观借口 19.9%</span>
+      <span style="background:var(--surface3);padding:.4rem .8rem;border-radius:8px;font-size:.85rem">假装接电话 19.9%</span>
+      <span style="background:var(--surface3);padding:.4rem .8rem;border-radius:8px;font-size:.85rem">转移注意力 19.3%</span>
+      <span style="background:var(--surface3);padding:.4rem .8rem;border-radius:8px;font-size:.85rem">直接拒绝 18.1%</span>
+    </div>
+    <p style="font-size:.85rem;color:var(--warn);margin-top:.8rem">⚠️ 五种几乎平分！但——在问卷上选"指出违法"的人，在现场真的说得出口吗？</p>
+  </div>
+
+  <h3>⏱️ 10 秒倒计时挑战</h3>
+  <div class="countdown-demo">
+    <div><div class="cd-num" id="cdNum">10</div><div class="cd-label">秒内做出选择</div></div>
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+      <button class="cd-btn cd-btn-a" onclick="resetCd()">Ⓐ "不好意思，我去接个电话"</button>
+      <button class="cd-btn cd-btn-b" onclick="resetCd()">Ⓑ "行吧，我就试一口"</button>
+      <div style="font-size:.75rem;color:var(--text2);text-align:center">超时未选 → 默认进入 Ⓑ</div>
+    </div>
+  </div>
+
+  <h3>✍️ 你的脱身话术共创</h3>
+  <p style="color:var(--text2);margin-bottom:1rem">规则：每句话不超过 15 个字。越口语、越自然越好。</p>
+  <div class="form-group"><label>话术 1</label><input type="text" placeholder="例如：不行我吃头孢了，绝对不能碰" maxlength="20"></div>
+  <div class="form-group"><label>话术 2</label><input type="text" placeholder="例如：等下我出去接个紧急电话" maxlength="20"></div>
+  <div class="form-group"><label>话术 3</label><input type="text" placeholder="写下你觉得最实用的脱身话" maxlength="20"></div>
+</section>
+
+<!-- Feedback -->
+<section class="section fade-in" id="feedback">
+  <div class="section-label">杀青</div>
+  <h2>🎬 工作坊<span>反馈表</span></h2>
+  <div class="divider"></div>
+  <p style="margin-bottom:1.5rem;color:var(--text2)">感谢你的倾力创作！请花 2 分钟填写反馈。</p>
+
+  <div class="rating-row"><span class="rating-label">1. 台词角色扮演让我感到了真实的社交压力</span><div class="rating-stars"><button onclick="rate(this,1)">1</button><button onclick="rate(this,2)">2</button><button onclick="rate(this,3)">3</button><button onclick="rate(this,4)">4</button><button onclick="rate(this,5)">5</button></div></div>
+  <div class="rating-row"><span class="rating-label">2. 濒死视觉讨论让我产生了明显的恐惧/不适</span><div class="rating-stars"><button onclick="rate(this,1)">1</button><button onclick="rate(this,2)">2</button><button onclick="rate(this,3)">3</button><button onclick="rate(this,4)">4</button><button onclick="rate(this,5)">5</button></div></div>
+  <div class="rating-row"><span class="rating-label">3. 脱身话术讨论让我学到了实际可用的方法</span><div class="rating-stars"><button onclick="rate(this,1)">1</button><button onclick="rate(this,2)">2</button><button onclick="rate(this,3)">3</button><button onclick="rate(this,4)">4</button><button onclick="rate(this,5)">5</button></div></div>
+  <div class="rating-row"><span class="rating-label">4. 我能感受到这不是普通的说教式禁毒教育</span><div class="rating-stars"><button onclick="rate(this,1)">1</button><button onclick="rate(this,2)">2</button><button onclick="rate(this,3)">3</button><button onclick="rate(this,4)">4</button><button onclick="rate(this,5)">5</button></div></div>
+  <div class="rating-row"><span class="rating-label">5. 我愿意在交互视频完成后参与体验测试</span><div class="rating-stars"><button onclick="rate(this,1)">1</button><button onclick="rate(this,2)">2</button><button onclick="rate(this,3)">3</button><button onclick="rate(this,4)">4</button><button onclick="rate(this,5)">5</button></div></div>
+  <div class="rating-row"><span class="rating-label">6. 整体而言，工作坊体验是愉快且投入的</span><div class="rating-stars"><button onclick="rate(this,1)">1</button><button onclick="rate(this,2)">2</button><button onclick="rate(this,3)">3</button><button onclick="rate(this,4)">4</button><button onclick="rate(this,5)">5</button></div></div>
+
+  <div class="form-group" style="margin-top:1.5rem"><label>今天哪个瞬间让你印象最深刻？为什么？</label><textarea placeholder="写下你的感受……"></textarea></div>
+  <div class="form-group"><label>你觉得这部交互短片对年轻人的禁毒教育有用吗？</label><textarea placeholder="写下你的想法……"></textarea></div>
+  <div class="form-group"><label>还有什么建议或想法想告诉研究者？</label><textarea placeholder="任何想说的……"></textarea></div>
+</section>
+
+<!-- Data Flow -->
+<section class="section fade-in" id="flow">
+  <div class="section-label">幕后</div>
+  <h2>你的创作<span>去了哪里？</span></h2>
+  <div class="divider"></div>
+  <div class="flow-container">
+    <div class="flow-item"><div class="flow-icon" style="background:rgba(214,48,49,.2)">🎤</div><span class="flow-from">你的施压台词</span><span style="color:var(--text2)">→</span><span class="flow-to">ElevenLabs AI 配音 → 视频中 NPC 的声音</span></div>
+    <div class="flow-item"><div class="flow-icon" style="background:rgba(253,203,110,.2)">👁️</div><span class="flow-from">你的恐惧视觉词</span><span style="color:var(--text2)">→</span><span class="flow-to">Midjourney / Sora 提示词 → 急救室蒙太奇画面</span></div>
+    <div class="flow-item"><div class="flow-icon" style="background:rgba(0,184,148,.2)">🛡️</div><span class="flow-from">你的脱身话术</span><span style="color:var(--text2)">→</span><span class="flow-to">交互按钮文案 → 视频中你的选项</span></div>
+    <div class="flow-item"><div class="flow-icon" style="background:rgba(108,92,231,.2)">📊</div><span class="flow-from">你的反馈评分</span><span style="color:var(--text2)">→</span><span class="flow-to">论文数据 → AIGC 禁毒影像设计准则</span></div>
+  </div>
+  <div class="card" style="margin-top:1.5rem;font-size:.9rem">
+    <p>📝 <strong>你将出现在论文中</strong>（以化名形式）。例如：</p>
+    <p style="color:var(--accent2);font-style:italic;margin-top:.5rem">"参与者 P3 在角色扮演中沉默了约 4 秒后表示'脑子真的一片空白'，这一反应验证了问卷数据中拒绝反应速度偏慢（M=3.47）的发现。"</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="school">哈尔滨工业大学（深圳）· 设计学</div>
+  <p>《致命节点》AIGC 交互式禁毒影像 · 硕士学位论文 · 2026</p>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>80)});
+
+// Intersection Observer for fade-in
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// Rating
+function rate(btn,val){
+  const stars=btn.parentElement;
+  stars.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('active',i<val)});
+}
+
+// Countdown demo
+let cdTimer=null;
+function startCd(){
+  let n=10;const el=document.getElementById('cdNum');
+  if(cdTimer)clearInterval(cdTimer);
+  el.textContent=n;
+  cdTimer=setInterval(()=>{n--;el.textContent=n;if(n<=0){clearInterval(cdTimer);el.textContent='💀';el.style.fontSize='2.5rem'}},1000);
+}
+function resetCd(){const el=document.getElementById('cdNum');if(cdTimer)clearInterval(cdTimer);el.textContent='✅';el.style.color='var(--success)';el.style.fontSize='3rem';setTimeout(()=>{el.style.color='var(--danger)';el.style.fontSize='3rem';el.textContent='10'},1500)}
+
+// Auto-start countdown when visible
+const cdObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)startCd()})},{threshold:0.5});
+const cdEl=document.querySelector('.countdown-demo');if(cdEl)cdObs.observe(cdEl);
+
+// Active nav link
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id});
+  document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur)});
+});
+</script>
+</body>
+</html>
